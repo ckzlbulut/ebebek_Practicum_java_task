@@ -89,7 +89,7 @@ public class Employee {
     public static double bonus(int workHours) {
         int bonus = 0;
         if (workHours > 40)
-            bonus = (workHours - 40) * 30;
+            bonus = (workHours - 40) * 30*4;
         return bonus;
     }
 
@@ -109,7 +109,7 @@ public class Employee {
         return salary-tax(salary)+bonus(workHours);
     }
     public static double newSalary(double salary, int workHours, int hireYear) {
-        return salary + raiseSalary(hireYear, salary, workHours);
+        return salary + raiseSalary(hireYear, salary, workHours)+bonus(workHours);
     }
 
 
@@ -151,18 +151,23 @@ public class Employee {
             System.out.println("\u001b[36;1m" + "No information with this name ! " + "\u001b[0m");
         }
     }
-
-    @Override
-    public String toString() {
-        System.out.println();
-        System.out.print("Loading...");
+    public static void progressBarr() {
+        System.out.println("\u001b[32;1m \u001b[0m");
+        for (int i = 0; i < 100; i++) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(30);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
-        System.out.println();
+            for (int j = i / 10; j > 0; j--) {
+                System.out.print("\u001b[42m" + "   " + "\u001b[0m");
+            }
+            System.out.print(" " + (i + 1) + "%\r");
+        }
+    }
+    @Override
+    public String toString() {
+        progressBarr();
         return
                 "\u001b[32;1m" + "Employee Information" + "\u001b[0m" + '\n' +
                         "Full Name         = " + name + '\n' +
